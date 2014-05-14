@@ -3,12 +3,13 @@
 // Create array to hold list of todo items
 $items = array();
 
-// The loop!
+// Main Loop
 do {
+
     // Iterate through list items
-    foreach ($items as $key => $item) {
+    foreach ($items as $item_num => $item_value) {
         // Display each item and a newline
-        echo "[{$key}] {$item}\n";
+        echo "[{$item_num}] {$item_value}\n";
     }
 
     // Show the menu options
@@ -31,8 +32,15 @@ do {
         // Get array key
         $key = trim(fgets(STDIN));
         // Remove from array
-        unset($items[$key]);
+        unset($items[$item_num]);
+
     }
+    // This code unshifts the array to list items starting with 1, instead of 0.
+    // array_unshift
+    array_unshift($items,"");
+    // unset
+    unset($items[0]);
+
 // Exit when input is (Q)uit
 } while ($input != 'Q' && $input != 'q');
 
