@@ -4,26 +4,21 @@
 $items = array();
 
 // List array items formatted for CLI
-function list_items($list)
-{
+function list_items($list) {
     // Return string of list items separated by newlines.
-    // Should be listed [KEY] Value like this:
-    // [1] TODO item 1
-    // [2] TODO item 2
-    // DO NOT USE ECHO, USE RETURN
 
-     foreach ($list as $key => $item) {
+    $output = '';
+
+    foreach ($list as $key => $item) {
         // Display each item and a newline
-        $output .= "[{$key}] {$item}" . PHP_EOL;   
+        $output .= "[" . ($key + 1) . "] $item" . PHP_EOL;   
      } 
         return $output;
 }
 
 // Get STDIN, strip whitespace and newlines, 
 // and convert to uppercase if $upper is true
-function get_input($upper = FALSE) 
-{   
-
+function get_input($upper = FALSE) {   
     $input = trim(fgets(STDIN));
     // Return filtered STDIN input
     return $upper ? strtoupper($input) : $input;
@@ -53,12 +48,10 @@ do {
         // Get array key
         $key = get_input();
         // Remove from array
-        unset($items[$key]);
+        unset($items[$key - 1]);
+        // Re-order numerical index of array
+        $items = array_values($items);
     }
-
-    // Re-order list each time, dropping 0 key.
-    array_unshift($items, "");
-    unset($items[0]);
 
 // Exit when input is (Q)uit
 } while ($input != 'Q');
