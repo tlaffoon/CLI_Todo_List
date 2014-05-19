@@ -43,7 +43,7 @@ function sort_menu($list, $sort_type) {
             krsort($list);
             break;
         default:
-            echo "default.";
+            echo "Please input a valid sort option." . PHP_EOL;
             break;
     }
     return $list;
