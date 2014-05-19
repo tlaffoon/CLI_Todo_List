@@ -24,16 +24,40 @@ function get_input($upper = FALSE) {
     return $upper ? strtoupper($input) : $input;
 }
 
+function sort_menu($list, $sort_type) {
+    switch ($sort_type) {
+        case 'A':
+            // Alpha sort
+            sort($list);
+            break;
+        case 'Z':
+            // Reverse alpha sort
+            rsort($list);
+            break;
+        case 'O':
+            // Order according to key
+            ksort($list);
+            break;
+        case 'R':
+            // Reverse according to key
+            krsort($list);
+            break;
+        default:
+            echo "default.";
+            break;
+    }
+    return $list;
+}
+
 // The loop!
 do {
     // Echo the list produced by the function
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort items, (Q)uit : ';
 
     // Get the input from user
-    // Use trim() to remove whitespace and newlines
     $input = get_input(TRUE);
 
     // Check for actionable input
@@ -42,6 +66,7 @@ do {
         echo 'Enter item: ';
         // Add entry to list array
         $items[] = get_input();
+
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
@@ -51,6 +76,11 @@ do {
         unset($items[$key - 1]);
         // Re-order numerical index of array
         $items = array_values($items);
+
+    } elseif ($input == 'S') {
+        echo "(A)-Z, (Z)-A, (O)rder entered, (R)everse order entered: ";
+        $sort_type = get_input(TRUE);
+        $items = sort_menu($items, $sort_type);
     }
 
 // Exit when input is (Q)uit
