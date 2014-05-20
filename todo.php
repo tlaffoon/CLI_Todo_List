@@ -1,26 +1,36 @@
 <?php
-/* -------------------------------------- */
 
-// Create array to hold list of todo items
+// Create an empty array to hold list of todo items
 $items = array();
 
 /* -------------------------------------- */
 
 function list_items($list) {
+// This function takes the current list array as input, and 
+//loops over the items in it to change the array to a string.
+// It then returns a string which is the list of the items.
 
+    // Initialize empty string to eliminate php notice error.
     $output = '';
 
+    // Loop over array items and construct string $output
     foreach ($list as $key => $item) {
         // Display each item and a newline
         $output .= "[" . ($key + 1) . "] $item" . PHP_EOL;   
      } 
+        // Return string $output as a product of this function.
         return $output;
 }
 
 /* -------------------------------------- */
 
 function get_input($upper = FALSE) {   
+// This function takes in user input, defaulting to lower case
+//but allowing translation into UPPER case.
+// It then returns the user input, trimmed of whitespace.
+
     $input = trim(fgets(STDIN));
+
     // Return filtered STDIN input
     return $upper ? strtoupper($input) : $input;
 }
@@ -28,6 +38,10 @@ function get_input($upper = FALSE) {
 /* -------------------------------------- */
 
 function sort_menu($list, $sort_type) {
+// This function takes in the current list and an option for sorting.
+// It then returns the list sorted according to the type specified.
+
+    // Switch statement $sort_type tells us which sort to use.
     switch ($sort_type) {
         case 'A':
             // Alpha sort
@@ -49,6 +63,8 @@ function sort_menu($list, $sort_type) {
             echo "Please input a valid sort option." . PHP_EOL;
             break;
     }
+
+    // Returns sorted list.
     return $list;
 }
 
@@ -66,6 +82,7 @@ do {
     $input = get_input(TRUE);
 
 /* -------------------------------------- */
+//  NEW ITEMS
 
     // Check for actionable input
     if ($input == 'N') {
@@ -74,22 +91,26 @@ do {
         $item = get_input();
 
     // Prompt user for beginning or end
-            echo '(B)eginning or (E)nd ?  ';
+            echo 'Place new items at (B)eginning or (E)nd of current list?  ';
             $input = get_input(TRUE);
 
+        // Logic for placing at beginning of list.
         if ($input == 'B') {
             array_unshift($items, $item);
         } 
 
+        // Logic for placing at end of list.
         elseif ($input == 'E') {
             array_push($items, $item);
         } 
 
+        // Default option is just to append item to current list.
         else 
             // Add entry to list array
             $items[] = get_input();
 
 /* -------------------------------------- */
+//  REMOVE ITEMS
 
     } elseif ($input == 'R') {
         // Remove which item?
@@ -102,6 +123,7 @@ do {
         $items = array_values($items);
 
 /* -------------------------------------- */
+//  SORT ITEMS
 
     } elseif ($input == 'S') {
         echo "(A)-Z, (Z)-A, (O)rder entered, (R)everse order entered: ";
