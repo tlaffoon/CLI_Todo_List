@@ -4,11 +4,14 @@
 $items = array();
 
 /* -------------------------------------- */
+/* LIST ITEMS
+
+  This function takes the current list array as input, and 
+loops over the items in it to change the array to a string.
+
+  It then returns a string which is the list of the items. */
 
 function list_items($list) {
-// This function takes the current list array as input, and 
-//loops over the items in it to change the array to a string.
-// It then returns a string which is the list of the items.
 
     // Initialize empty string to eliminate php notice error.
     $output = '';
@@ -23,11 +26,14 @@ function list_items($list) {
 }
 
 /* -------------------------------------- */
+/* GET USER INPUT
+
+  This function takes in user input, defaulting to lower case
+but allowing translation into UPPER case.
+
+  It then returns the user input, trimmed of whitespace. */
 
 function get_input($upper = FALSE) {   
-// This function takes in user input, defaulting to lower case
-//but allowing translation into UPPER case.
-// It then returns the user input, trimmed of whitespace.
 
     $input = trim(fgets(STDIN));
 
@@ -36,10 +42,13 @@ function get_input($upper = FALSE) {
 }
 
 /* -------------------------------------- */
+/* SORT MENU
+
+  This function takes in the current list and an option for sorting.
+  It then returns the list sorted according to the type specified. */
 
 function sort_menu($list, $sort_type) {
-// This function takes in the current list and an option for sorting.
-// It then returns the list sorted according to the type specified.
+
 
     // Switch statement $sort_type tells us which sort to use.
     switch ($sort_type) {
@@ -69,8 +78,8 @@ function sort_menu($list, $sort_type) {
 }
 
 /* -------------------------------------- */
+// BEGIN MAIN LOOP
 
-// The loop!
 do {
     // Echo the list produced by the function
     echo list_items($items);
@@ -82,7 +91,7 @@ do {
     $input = get_input(TRUE);
 
 /* -------------------------------------- */
-//  NEW ITEMS
+//  ADD ITEMS
 
     // Check for actionable input
     if ($input == 'N') {
