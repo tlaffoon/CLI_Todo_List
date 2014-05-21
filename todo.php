@@ -52,20 +52,12 @@ function add_item($list) {
     echo 'Enter item: ';
     $item = get_input();
 
-    // Prompt user for beginning or end
-    echo 'Place new items at (B)eginning or (E)nd of current list? ';
-    $location = get_input(TRUE);
+    // Add entry to list array
+    array_push($list, $item);
 
-    // Logic for placing at beginning of list.
-    if ($location == 'B') {
-        array_unshift($list, $item);
-    } 
-
-    // Default option is just to append item to current list.
-    else {
-        // Add entry to list array
-        array_push($list, $item);
-    }
+    // echo "Input list number for item: ";
+    // $key = get_input();
+    // ($item, $list[$key - 1]);
 
     return $list;
 }
@@ -86,9 +78,8 @@ function remove_item($list) {
     unset($list[$key - 1]);
  
     // Re-order numerical index of array
-    $list = array_values($list);
-
-    return $list;
+    return array_values($list);
+    
 }
 
 /* -------------------------------------- */
@@ -107,26 +98,34 @@ function remove_last($list) {
 
 /* -------------------------------------- */
 
-function open_file($file = './data/list.txt') {
-    $handle = fopen($file, r);
+function open_file($filename) {
+
+    echo "Please enter filename to open (default: ./data/list.txt): ";
+    $filename = get_input();
+
+    if (empty($file) ) {
+        $filename = './data/list.txt';
+    }
+
+    $handle = fopen($filename, 'r');
     $contents = trim(fread($handle, 100));
     $list = explode("\n", $contents);
     fclose($handle);
-    var_dump($list);
-
     return $list;
 }
 
 /* -------------------------------------- */
 
 function save_to_file($list, $file = './data/list.txt') {
-    $handle = fopen($file, w);
+    $handle = fopen($file, 'w');
     foreach ($list as $item) {
         fwrite($handle, $item . PHP_EOL);
     }
     fclose($handle);
 
-    return PHP_EOL . "Successfully saved list to $file.\n" . PHP_EOL;
+    // $msg = 
+
+    return PHP_EOL . "Successfully saved list to $file." . PHP_EOL;
 
 }
 
@@ -184,7 +183,7 @@ do {
 
     switch ($menu_choice) {
         case 'O':
-            $list = open_file();
+            $list = open_file($filename);
             break;
         case 'A':
             $list = add_item($list);
