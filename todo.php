@@ -109,9 +109,10 @@ function remove_last($list) {
 
 function open_file($file = './data/list.txt') {
     $handle = fopen($file, r);
-    $contents = fread($handle, 1000);
+    $contents = trim(fread($handle, 100));
     $list = explode("\n", $contents);
     fclose($handle);
+    var_dump($list);
 
     return $list;
 }
