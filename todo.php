@@ -116,16 +116,24 @@ function open_file($filename) {
 
 /* -------------------------------------- */
 
-function save_to_file($list, $file = './data/list.txt') {
-    $handle = fopen($file, 'w');
+function save_to_file($list) {
+
+    echo "Please enter filename to save (default: ./data/list.txt): ";
+    $filename = get_input();
+
+    if (empty($filename) ) {
+        $filename = './data/list.txt';
+    }
+
+    $handle = fopen($filename, 'w');
     foreach ($list as $item) {
         fwrite($handle, $item . PHP_EOL);
     }
     fclose($handle);
 
-    // $msg = 
+    $success_msg = "Successfully saved list to $filename.\n";
 
-    return PHP_EOL . "Successfully saved list to $file." . PHP_EOL;
+    return $success_msg;
 
 }
 
@@ -201,7 +209,7 @@ do {
             $list = remove_last($list);
             break;
         case 'V':
-            echo save_to_file($list);
+            echo PHP_EOL . save_to_file($list) . PHP_EOL;   
             break;
     }
 
