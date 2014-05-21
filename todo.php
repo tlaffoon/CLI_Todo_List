@@ -102,13 +102,23 @@ function remove_last($list) {
 }
 
 function open_file($file = './data/list.txt') {
-    $filename = $file;
-    $handle = fopen($filename, r);
-    $contents = fread($handle, 100);
+    $handle = fopen($file, r);
+    $contents = fread($handle, 1000);
     $list = explode("\n", $contents);
     fclose($handle);
 
     return $list;
+}
+
+function save_to_file($list, $file = './data/list.txt') {
+    $handle = fopen($file, w);
+    foreach ($list as $key => $item) {
+        fwrite($handle, $item . PHP_EOL);
+    }
+    fclose($handle);
+
+    return PHP_EOL . "Successfully saved list to $file.\n" . PHP_EOL;
+
 }
 
 /* -------------------------------------- */
@@ -159,7 +169,7 @@ do {
 	echo output_list($list);
 
     // Show the menu options
-	echo '(O)pen File, (A)dd item, (R)emove item, (S)ort list, (Q)uit : ';
+	echo '(O)pen File, (A)dd item, (R)emove item, (S)ort list, Sa(V)e File, (Q)uit : ';
 
     // Calls get_input(); to get user menu choice.
     $menu_choice = get_input(TRUE);
@@ -182,6 +192,9 @@ do {
             break;        
         case 'L':
             $list = remove_last($list);
+            break;
+        case 'V':
+            echo save_to_file($list);
             break;
     }
 
