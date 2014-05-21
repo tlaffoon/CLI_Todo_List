@@ -108,7 +108,7 @@ function open_file($filename) {
     }
 
     $handle = fopen($filename, 'r');
-    $contents = trim(fread($handle, 100));
+    $contents = trim(fread($handle, filesize($filename)));
     $list = explode("\n", $contents);
     fclose($handle);
     return $list;
@@ -125,15 +125,20 @@ function save_to_file($list) {
         $filename = './data/list.txt';
     }
 
-    $handle = fopen($filename, 'w');
-    foreach ($list as $item) {
-        fwrite($handle, $item . PHP_EOL);
-    }
-    fclose($handle);
+    if (file_exists($filename)) {
+        // warn, prompt, save
+        echo "WARNING: Do you want to overwrite your existing file - $filename ? ";
+        $choice = get_input(TRUE);
+        if ($choice == 'Y' || $choice == 'YES') {
+            $handle = fopen($filename, 'w');
+            foreach ($list as $item) {
+                fwrite($handle, $item . PHP_EOL);
+            }
+            fclose($handle);        
+        }
+    }  // else continue
 
-    $success_msg = "Successfully saved list to $filename.\n";
-
-    return $success_msg;
+    return "Successfully saved list to $filename\n";
 
 }
 
