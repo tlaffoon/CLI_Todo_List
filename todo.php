@@ -1,12 +1,16 @@
 <?php
 
-// Create an empty array to hold list of todo items
+/* -------------------------------------- */
+
+// INITIALIZE EMPTY ARRAY FOR LIST ITEMS
+
 $list = array();
 
 /* -------------------------------------- */
-/* GET USER INPUT
 
-  This function takes in user input, defaulting to lower case
+// GET USER INPUT
+
+/*  This function takes in user input, defaulting to lower case
 but allowing translation into UPPER case.
 
   It then returns the user input, trimmed of whitespace. */
@@ -21,9 +25,9 @@ function get_input($upper = FALSE) {
 
 /* -------------------------------------- */
 
-/* LIST ITEMS
+// LIST ITEMS
 
-  This function takes the current list array as input, and 
+/*  This function takes the current list array as input, and 
 loops over the items in it to change the array to a string.
 
   It then returns a string which is the list of the items. */
@@ -79,10 +83,11 @@ function remove_item($list) {
  
     // Re-order numerical index of array
     return array_values($list);
-    
 }
 
 /* -------------------------------------- */
+
+// REMOVE FIRST ITEM
 
 function remove_first($list) {
     unset($list[0]);
@@ -91,12 +96,16 @@ function remove_first($list) {
 
 /* -------------------------------------- */
 
+// REMOVE LAST ITEM
+
 function remove_last($list) {
     unset($list[count($list) - 1]);
     return $list;
 }
 
 /* -------------------------------------- */
+
+// OPEN FILE TO POPULATE LIST
 
 function open_file($filename) {
 
@@ -115,6 +124,8 @@ function open_file($filename) {
 }
 
 /* -------------------------------------- */
+
+// SAVE LIST TO FILENAME
 
 function save_to_file($list) {
 
@@ -135,18 +146,16 @@ function save_to_file($list) {
                 fwrite($handle, $item . PHP_EOL);
             }
             fclose($handle);        
-        }
-    }  // else continue
-
+        } else return "Save $filename canceled by user.\n";
+    }  // else nothing.
     return "Successfully saved list to $filename\n";
-
-}
+}   
 
 /* -------------------------------------- */
 
-/* SORT LIST
+// SORT LIST
 
-  This function takes in the current list and an option for sorting.
+/*  This function takes in the current list and an option for sorting.
   It then returns the list sorted according to the type specified. */
 
 function sort_list($list) {
@@ -209,7 +218,7 @@ do {
             break;
         case 'F':
             $list = remove_first($list);
-            break;        
+            break;
         case 'L':
             $list = remove_last($list);
             break;
