@@ -101,6 +101,15 @@ function remove_last($list) {
     return $list;
 }
 
+function open_file($file = './data/list.txt') {
+    $filename = $file;
+    $handle = fopen($filename, r);
+    $contents = fread($handle, 100);
+    $list = explode("\n", $contents);
+    fclose($handle);
+
+    return $list;
+}
 
 /* -------------------------------------- */
 /* SORT MENU
@@ -108,7 +117,10 @@ function remove_last($list) {
   This function takes in the current list and an option for sorting.
   It then returns the list sorted according to the type specified. */
 
-function sort_list($list, $sort_type) {
+function sort_list($list) {
+
+    echo "(A)lphabetical, (Z) Reverse Alpha, (K)ey Order, (R) Reverse Key: " ;
+    $sort_type = get_input();
 
     // Switch statement $sort_type tells us which sort to use.
     switch ($sort_type) {
@@ -120,7 +132,7 @@ function sort_list($list, $sort_type) {
             // Reverse alpha sort
             rsort($list);
             break;
-        case 'O':
+        case 'K':
             // Order according to key
             ksort($list);
             break;
@@ -147,12 +159,15 @@ do {
 	echo output_list($list);
 
     // Show the menu options
-	echo '(A)dd item, (R)emove item, (S)ort list, (Q)uit : ';
+	echo '(O)pen File, (A)dd item, (R)emove item, (S)ort list, (Q)uit : ';
 
     // Calls get_input(); to get user menu choice.
     $menu_choice = get_input(TRUE);
 
     switch ($menu_choice) {
+        case 'O':
+            $list = open_file();
+            break;
         case 'A':
             $list = add_item($list);
             break;
