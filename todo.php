@@ -91,15 +91,21 @@ function remove_item($list) {
     return $list;
 }
 
+/* -------------------------------------- */
+
 function remove_first($list) {
     unset($list[0]);
     return array_values($list);
 }
 
+/* -------------------------------------- */
+
 function remove_last($list) {
     unset($list[count($list) - 1]);
     return $list;
 }
+
+/* -------------------------------------- */
 
 function open_file($file = './data/list.txt') {
     $handle = fopen($file, r);
@@ -110,9 +116,11 @@ function open_file($file = './data/list.txt') {
     return $list;
 }
 
+/* -------------------------------------- */
+
 function save_to_file($list, $file = './data/list.txt') {
     $handle = fopen($file, w);
-    foreach ($list as $key => $item) {
+    foreach ($list as $item) {
         fwrite($handle, $item . PHP_EOL);
     }
     fclose($handle);
@@ -122,7 +130,8 @@ function save_to_file($list, $file = './data/list.txt') {
 }
 
 /* -------------------------------------- */
-/* SORT MENU
+
+/* SORT LIST
 
   This function takes in the current list and an option for sorting.
   It then returns the list sorted according to the type specified. */
@@ -158,8 +167,6 @@ function sort_list($list) {
     // Returns sorted list.
     return $list;
 }
-
-/* -------------------------------------- */
 
 // ********** MAIN LOOP ********** // 
 
@@ -200,6 +207,8 @@ do {
 
 // Exit when input is (Q)uit
 } while ($menu_choice != 'Q');
+
+// ********** LOOP END *********** // 
 
 // Say Goodbye!
 echo "Adios!\n";
